@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block head_title %}Your Shopping Lists {% endblock %} {% block content %} {% load staticfiles %}
+
+<div class="lists-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="lists-list">
+                    {% for list in shopping_lists %}
+                    <li><a>
+                        <div class="todo-icon fui-list"></div>
+                        <div class="todo-content">
+                            <h4 class="todo-name">
+                                <strong>{{ list.name }}</strong> in {{ list.shop }}
+                            </h4>
+                            {{ list.date }}
+                        </div>
+                        </a>
+                        <div class="todo-right pull-right">
+                            <button><span class="fui-cross-circle"></span></button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Adrian Dworanowski">
+        
+        <title>SHOPPING-LIST APP - {% block head_title %}{% endblock %}</title>
+        
+        {% include 'css.html' %}
+        {% include 'pre-js.html' %}
+    </head>
+    
+    <body>
+        {% block wrapper %}
+        
+            {% include 'navbar.html' %}
+            
+            {% block content %} 
+            {% endblock %}
+            
+        {% endblock %}
+        
+        {% include 'post-js.html' %}
+    </body>
+</html>

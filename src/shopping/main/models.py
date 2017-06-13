@@ -12,6 +12,8 @@ class Category(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=40)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    accepted = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
@@ -31,6 +33,7 @@ class ShoppingList(models.Model):
 class ShoppingItem(models.Model):
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     shopping_list = models.ForeignKey('ShoppingList', on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=1)
 
     def __str__(self):
         return self.item.name
