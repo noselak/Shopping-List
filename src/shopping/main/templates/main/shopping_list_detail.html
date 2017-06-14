@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block head_title %}List {{ list.name }} {% endblock %} 
+{% block content %} 
+{% load staticfiles %}
+
+<div class="detail-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>{{ shopping_list.name }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

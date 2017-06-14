@@ -55,16 +55,16 @@ class RegisterForm(UserCreationForm):
                                label="Confirm Password",
                                max_length=30,
                                widget=forms.TextInput(attrs={
-                                    'placeholder': 'Password',
+                                    'placeholder': 'Confirm Password',
                                     'class': 'form-control login-field',
                                     'name': 'password2',
                                     'type': 'password'
                                     })
                                )
     email = forms.CharField(
-                               label="Username", max_length=30,
+                               label="E-mail", max_length=30,
                                widget=forms.TextInput(attrs={
-                                    'placeholder': 'Enter Your Name',
+                                    'placeholder': 'E-mail',
                                     'class': 'form-control login-field',
                                     'name': 'username'
                                     })

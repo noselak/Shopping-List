@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <ul class="lists-list">
                     {% for list in shopping_lists %}
-                    <li><a>
+                    <li><a href="{% url 'main:shopping_list_detail_view' pk=list.pk %}">
                         <div class="todo-icon fui-list"></div>
                         <div class="todo-content">
                             <h4 class="todo-name">

@@ -1,7 +1,6 @@
 {% extends 'base.html' %} 
-{% load staticfiles %}
-{% block head_title %}Login{% endblock %}
-{% block wrapper %}
+{% block head_title %}Register{% endblock %}
+{% load staticfiles %} {% block wrapper %}
 <div class="login-screen">
     <div class="container">
         <div class="row">
@@ -15,17 +14,24 @@
                 <form class="login-form" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        {{ login_form.username }}
+                        {{ register_form.username }}
                         <label class="login-field-icon fui-user" for="login-name"></label>
                     </div>
                     <div class="form-group">
-                        {{ login_form.password }}
+                        {{ register_form.email }}
+                        <label class="login-field-icon fui-mail" for="login-name"></label>
+                    </div>
+                    <div class="form-group">
+                        {{ register_form.password1 }}
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>
+                    <div class="form-group">
+                        {{ register_form.password2 }}
                         <label class="login-field-icon fui-lock" for="login-pass"></label>
                     </div>
 
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
-                    <a class="login-link" href="#">Lost your password?</a>
-                    <a class="login-link" href="{% url 'users:register_view' %}">Register</a>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
+                    <a class="login-link" href="{% url 'users:login_view' %}">Login</a>
                 </form>
             </div>
 

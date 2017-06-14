@@ -6,8 +6,21 @@ html, body {
 }
 
 /*nav*/
+
+/*.nav-logout {*/
+/*    height: 30px;*/
+/*}*/
+
 .nav-logout {
-    font-size: 31px;
+    font-size: 29px;
+}
+
+.navbar-collapse {
+    background: #34495E;
+}
+
+.navbar-custom, .navbar-form {
+    height: 53px;
 }
 
 @media (max-width: 767px) {
@@ -27,7 +40,7 @@ html, body {
     color: #ECF0F1;
     display: block;
     height: 100%;
-    background: #2C3E50;
+    background: #3498DB;
 }
 
 .lists-wrapper a {
@@ -35,7 +48,7 @@ html, body {
 }
 
 .lists-wrapper a:hover {
-    color: #1ABC9C;
+    color: #34495E;
 }
 
 .lists-list {
@@ -58,6 +71,10 @@ html, body {
     background: rgba(255,255,255,0.2);
 }
 
+.todo-icon {
+    padding: 7px 22px 0 0;
+}
+
 .todo-name {
     font-weight: 300;
     color: inherit;
@@ -75,12 +92,25 @@ html, body {
 }
 
 .todo-right > button:hover .fui-cross-circle {
-    color: #1ABC9C;
+    color: #34495E;
     transition: 0.2s ease-in-out;
 }
 
 .todo-content {
     float: left;
+}
+
+/*list detail*/
+
+.detail-wrapper {
+    color: #ECF0F1;
+    display: block;
+    height: 100%;
+    background: #2ECC71;
+}
+
+.detail-wrapper h5 {
+    margin-top: 75px;
 }
 
 /*login*/

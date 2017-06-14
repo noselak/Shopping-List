@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-embossed navbar-fixed-top navbar-custom" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
@@ -15,7 +15,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Lists <b class="caret"></b></a>
                   <span class="dropdown-arrow"></span>
                   <ul class="dropdown-menu">
-                    <li><a href="#">View Lists</a></li>
+                    <li><a href="{% url 'main:shopping_lists_view' %}">View Lists</a></li>
                     <li><a href="#">Add List</a></li>
                     <li class="divider"></li>
                     <li><a href="#">Export List</a></li>

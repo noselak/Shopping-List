@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 
 class LoginView(View):
@@ -36,3 +36,34 @@ class LoginView(View):
                 messages.error(request, 'Wrong password and/or username', 
                                 extra_tags='login')
                 return redirect('users:login_view')
+                
+                
+class RegisterView(View):
+    template = 'users/register.html'
+    
+    def get(self, request):
+        register_form = RegisterForm(None)
+        context = {
+            'register_form': register_form,
+        }
+        return render(request, self.template, context)
+        
+    def post(self, request):
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            username = register_form.cleaned_data['username']
+            password = register_form.cleaned_data['password1']
+            user = register_form.save(commit=False)
+            user.set_password(password)
+            user.save()
+            
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('main:shopping_lists_view')
+            
+        context = {
+            'register_form': register_form,
+        }
+        return render(request, self.template, context)
+            
+            
