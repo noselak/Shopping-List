@@ -7,6 +7,11 @@ html, body {
 
 /*nav*/
 
+
+.navbar-brand {
+    font-family: 'Molle', cursive;
+}
+
 .nav-logout {
     font-size: 29px;
 }
@@ -131,14 +136,38 @@ html, body {
     font-weight: 300;
 }
 
+.todo ul {
+    background-color: inherit;
+}
+
 .todo .list-item {
     color: #ECF0F1;
     padding: 10px 20px;
     height: 65px;
+    border-top: 1px solid #ECF0F1;
+}
+
+.todo li {
+    background-color: inherit;
+    transition: 0.25s;
 }
 
 .todo li:last-child {
     border-radius: 0;
+}
+
+.todo li.todo-done, .todo li.todo-done .todo-name {
+    color: #BDC3C7;
+    transition: 0.25s;
+    
+}
+
+.todo li.todo-done .todo-name {
+    text-decoration: line-through
+}
+
+.todo li.todo-done:after {
+    background: #BDC3C7;
 }
 
 /*login*/
