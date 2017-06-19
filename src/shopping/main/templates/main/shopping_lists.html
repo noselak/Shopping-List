@@ -6,18 +6,22 @@
             <div class="col-md-12">
                 <ul class="lists-list">
                     {% for list in shopping_lists %}
-                    <li><a href="{% url 'main:shopping_list_detail_view' pk=list.pk %}">
+                    <li>
+                        <a href="{% url 'main:shopping_list_detail_view' pk=list.pk %}">
                         <div class="todo-icon fui-list"></div>
                         <div class="todo-content">
                             <h4 class="todo-name">
                                 <strong>{{ list.name }}</strong> in {{ list.shop }}
                             </h4>
-                            {{ list.date }}
+                            <small>{{ list.date }}</small>
                         </div>
                         </a>
-                        <div class="todo-right pull-right">
-                            <button><span class="fui-cross-circle"></span></button>
-                        </div>
+                        <form method="POST" action="{% url 'main:shopping_list_delete_view' pk=list.pk %}">
+                            {% csrf_token %}
+                            <div class="todo-right pull-right">
+                                <button><span class="fui-trash"></span></button>
+                            </div>
+                        </form>
                     </li>
                     {% endfor %}
                 </ul>

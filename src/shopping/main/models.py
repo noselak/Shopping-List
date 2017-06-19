@@ -20,9 +20,9 @@ class Item(models.Model):
 
 
 class ShoppingList(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=15)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    shop = models.CharField(max_length=40)
+    shop = models.CharField(max_length=15)
     date = models.DateField()
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
