@@ -10,7 +10,7 @@
             
             $.ajax({
             type: 'POST',
-            url: '{% url "main:mark_shopping_item_view" %}',
+            url: '{% url "lists:mark_shopping_item_view" %}',
             data: {
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
                 'pk': item_pk

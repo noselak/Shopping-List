@@ -7,7 +7,7 @@
                 <ul class="lists-list">
                     {% for list in shopping_lists %}
                     <li>
-                        <a href="{% url 'main:shopping_list_detail_view' pk=list.pk %}">
+                        <a href="{% url 'lists:shopping_list_detail_view' pk=list.pk %}">
                         <div class="todo-icon fui-list"></div>
                         <div class="todo-content">
                             <h4 class="todo-name">
@@ -16,7 +16,7 @@
                             <small>{{ list.date }}</small>
                         </div>
                         </a>
-                        <form method="POST" action="{% url 'main:shopping_list_delete_view' pk=list.pk %}">
+                        <form method="POST" action="{% url 'lists:shopping_list_delete_view' pk=list.pk %}">
                             {% csrf_token %}
                             <div class="todo-right pull-right">
                                 <button><span class="fui-trash"></span></button>

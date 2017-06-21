@@ -7,7 +7,6 @@ html, body {
 
 /*nav*/
 
-
 .navbar-brand {
     font-family: 'Molle', cursive;
 }
@@ -200,11 +199,16 @@ html, body {
     width: 100px;
     text-align: left;
     position: relative;
-    top: 30px;
+    top: 15px;
     color: #ECF0F1;
 }
 
 .login-form {
     margin-bottom: 30px;
     height: 100%;
+}
+
+.logo {
+    font-family: 'Molle', cursive;
+    font-size: 30px;
 }
