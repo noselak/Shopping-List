@@ -5,6 +5,35 @@ html, body {
     margin: 0;
 }
 
+/*main*/
+
+.main-wrapper {
+    background: #BDC3C7;
+    display: block;
+    height: 100%;
+}
+
+.main-icons {
+    margin-top: 75px;
+}
+
+.main-icons p {
+    color: #7F8C8D;
+    margin: 10px 0px 0px 0px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.main-icons img {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 122px;
+}
+
+.tile {
+    min-height: 185px;
+}
+
 /*nav*/
 
 .navbar-brand {
@@ -12,7 +41,12 @@ html, body {
 }
 
 .nav-logout {
-    font-size: 29px;
+    font-size: 30px;
+}
+
+.nav-logout span {
+    position: relative;
+    top: 1px;
 }
 
 .navbar-collapse {

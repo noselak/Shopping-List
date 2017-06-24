@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block head_title %}Welcome {% endblock %} {% block content %} {% load staticfiles %}
+
+<div class="main-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="main-icons">
+                <div class="col-xs-6 col-md-3">
+                    <div class="tile">
+                        <a href="{% url 'lists:shopping_lists_view' %}">
+                            <img class="img-responsive" src="{% static 'img/icons/png/Clipboard.png' %}">
+                            <p>My Lists</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <div class="tile">
+                        <a href="">
+                            <img class="img-responsive" src="{% static 'img/icons/png/Pensils.png' %}">
+                            <p>Add List</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <div class="tile">
+                        <a href="">
+                            <img class="img-responsive" src="{% static 'img/icons/png/Toilet-Paper.png' %}">
+                            <p>Products</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <div class="tile">
+                        <a href="">
+                            <img class="img-responsive" src="{% static 'img/icons/png/Book.png' %}">
+                            <p>Add Product</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

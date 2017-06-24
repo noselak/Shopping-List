@@ -26,7 +26,7 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('lists:shopping_lists_view')
+                    return redirect('main:main_page_view')
                 else:
                     messages.error(request, 
                                 'User {} has been blocked'.format(username), 
@@ -59,7 +59,7 @@ class RegisterView(View):
             
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('lists:shopping_lists_view')
+            return redirect('main:main_page_view')
             
         context = {
             'register_form': register_form,
