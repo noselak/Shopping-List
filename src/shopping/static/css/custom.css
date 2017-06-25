@@ -150,6 +150,37 @@ html, body {
     }
 }
 
+/*add list*/
+
+.add-list-wrapper {
+    display: block;
+    height: 100%;
+    background: #ECF0F1;
+}
+
+.add-list-form {
+    margin-top: 75px
+}
+
+.add-list-form h6 {
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.add-items-list-wrapper {
+    display: block;
+    height: 100%;
+    background: #2ECC71;
+}
+
+.add-items-list-wrapper h6 {
+    font-weight: 300;
+    margin-top: 75px;
+    margin-bottom: 30px;
+    color: #ECF0F1;
+}
+
+
 /*list detail*/
 
 .detail-wrapper {

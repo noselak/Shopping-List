@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block head_title %}Add New List{% endblock %} {% block content %} {% load staticfiles %}
+
+<div class="add-list-wrapper">
+    <div class="container">
+        <div class="row">
+            <form class="add-list-form" method="POST">
+                {% csrf_token %}
+                <div class="col-sm-12">
+                    <h6>Add New List</h6>
+                </div>
+                {% for field in list_create_form %}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-embossed btn-primary">Save and add items</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       $('.datepicker').datepicker();
+    });
+</script>
+
+{% endblock %}
