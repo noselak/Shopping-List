@@ -16,3 +16,4 @@ class ShoppingListAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ShoppingList, ShoppingListAdmin)
+admin.site.register(ShoppingItem)

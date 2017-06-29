@@ -1,0 +1,11 @@
+<ul>
+    {% for item in items %}
+    <li><form action="{% url 'lists:add_items_to_list_view' pk=shopping_list_pk %}" method="POST">
+    {% csrf_token %}
+    {{ item.name }}
+    <input type="hidden" name="item-pk" value="{{ item.pk }}">
+    <button type="submit" class="form-control-feedback fui-plus"></button>
+    </span></form>
+    </li>
+    {% endfor %}
+</ul>

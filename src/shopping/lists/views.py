@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 
+from items.models import Item
+
 from .models import ShoppingList, ShoppingItem
 from .forms import ListCreateForm
 
@@ -81,3 +83,39 @@ class AddShoppingListView(View):
             'list_create_form': list_create_form,
         }
         return render(request, template, context)
+
+
+class AddItemsToListView(View):
+    @method_decorator(login_required(login_url='users:login_view'))
+    def get(self, request, pk):
+        shopping_list = ShoppingList.objects.get(pk=pk)
+        template = 'lists/add_items_to_list.html'
+        context = {
+            'shopping_list': shopping_list,
+        }
+        return render(request, template, context)
+
+    @method_decorator(login_required(login_url='users:login_view'))
+    def post(self, request, pk):
+        shopping_list = ShoppingList.objects.get(pk=pk)
+        item_pk = request.POST.get('item-pk')
+        item = None
+        
+        try:
+            item = Item.objects.get(pk=item_pk)
+        except:
+            pass
+        
+        if item:
+            obj, created = ShoppingItem.objects.get_or_create(
+                    item=item, shopping_list=shopping_list)
+            
+            if not created:
+                obj.quantity = obj.quantity + 1
+                obj.save()
+
+        else:
+            obj = ShoppingItem.objects.create(
+                    shopping_list=shopping_list)
+
+        return redirect('lists:shopping_list_detail_view', pk=shopping_list.pk)

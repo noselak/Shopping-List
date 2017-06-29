@@ -27,5 +27,14 @@ class ShoppingItem(models.Model):
     quantity = models.PositiveSmallIntegerField(default=1)
     bought = models.BooleanField(default=False)
 
+    @property
+    def get_name(self):
+        if self.name is not None:
+            return self.name
+        elif self.item is not None:
+            return self.item.name
+        else:
+            return "Unindentified Item"
+
     def __str__(self):
-        return self.item.name
+        return self.get_name

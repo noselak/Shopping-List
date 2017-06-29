@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h5>{{ shopping_list.name }}</h5>
+                <h6>{{ shopping_list.name }}</h6>
                 <p class="list-desc"><small>{{ shopping_list.shop }} at {{ shopping_list.date }}</small></p>
             </div>
         </div>
@@ -17,7 +17,7 @@
                             <div class="todo-icon fui-tag"></div>
                             <div class="todo-content">
                                 <h4 class="todo-name">
-                                    {{ item.item.name }}
+                                    {{ item.get_name }}
                                 </h4>
                                 <strong>Quantity:</strong> {{ item.quantity }}
                             </div>
@@ -28,6 +28,10 @@
                 <!-- /.todo -->
             </div>
         </div>
+        <a href="{% url 'lists:add_items_to_list_view' pk=shopping_list.pk %}">
+            <div class="add-items-plus">
+            </div>
+        </a>
     </div>
 </div>
 
