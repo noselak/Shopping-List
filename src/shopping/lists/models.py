@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from items.models import Item
 
@@ -22,19 +24,17 @@ class ShoppingList(models.Model):
 
 class ShoppingItem(models.Model):
     name = models.CharField(max_length=15, blank=True, null=True)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE,
+                             null=True, blank=True)
     shopping_list = models.ForeignKey('ShoppingList', on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=1)
     bought = models.BooleanField(default=False)
 
-    @property
-    def get_name(self):
-        if self.name is not None:
-            return self.name
-        elif self.item is not None:
-            return self.item.name
-        else:
-            return "Unindentified Item"
-
     def __str__(self):
         return self.get_name
+
+
+@receiver(pre_save, sender=ShoppingItem)
+def default_name(sender, instance, *args, **kwargs):
+    if not instance.name:
+        instance.name = instance.item.name

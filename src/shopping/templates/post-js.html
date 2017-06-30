@@ -4,52 +4,22 @@
 <script src="{% static 'js/prettify.js' %}"></script>
 
 <script>
-    (function(){
-        $('.list-item').click(function(event){
+    (function() {
+        $('.list-item').click(function(event) {
             var item_pk = $(this).attr("list-item-pk");
-            
-            $.ajax({
-            type: 'POST',
-            url: '{% url "lists:mark_shopping_item_view" %}',
-            data: {
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-                'pk': item_pk
-            },
-            error: function(data){
-                console.log('Ajax Error');
-            }
-            });
-        });
-        
-        $('#search-items').keyup(function(event){
-            var q = $(this).val()
 
             $.ajax({
-            type: 'GET',
-            url: '{% url "items:search_items_view" %}',
-            data: {
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-                'q': q,
-                'shopping_list_pk': '{{ shopping_list.pk }}',
-            },
-            success: function(data){
-                $('.search-result').html(data);
-                
-                var result = "<form action=\"{% url 'lists:add_items_to_list_view'" +
-                             "pk=shopping_list.pk %}\" method=\"POST\">{% csrf_token %}" + 
-                             q + 
-                             "<button type=\"submit\" class=\"form-control-feedback fui-plus\">" +
-                             "</button></span></li></form>"
-                
-                if(q){
-                    $('.search-result ul').prepend($('<li>').append(result)); 
+                type: 'POST',
+                url: '{% url "lists:mark_shopping_item_view" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'pk': item_pk
+                },
+                error: function(data) {
+                    console.log('Ajax Error');
                 }
-                
-            },
-            error: function(data){
-                console.log('Ajax Error');
-            }
             });
         });
+
     })();
 </script>

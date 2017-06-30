@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h6>Add Items to <strong>{{ shopping_list.name }}</strong></h6>
+                <h6>Add Items to <a href="{% url 'lists:shopping_list_detail_view' pk=shopping_list.pk %}"><strong>{{ shopping_list.name }}</strong></a></h6>
             </div>
         </div>
         <div class="row">
@@ -13,7 +13,10 @@
                     <input type="text" value="" id="search-items" placeholder="Type here to search and add items" class="form-control" />
                     <span class="form-control-feedback fui-search"></span>
                 </div>
-                <div class="search-result"></div>
+                <div class="search-result">
+                    <ul>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -26,21 +29,23 @@
                 Your list:
             </div>
         </div>
-        <!--<div class="row">-->
-        <!--    <ul>-->
-        <!--        {% for shopping_item in shopping_list.shopping_items %}-->
-        <!--        <li>-->
-        <!--            <div class="col-xs-6">-->
-        <!--                {{ shopping_item.get_name }}-->
-        <!--            </div>-->
-        <!--            <div class="col-xs-6">-->
-        <!--                {{ shopping_item.quantity }}-->
-        <!--            </div>-->
-        <!--        </li>-->
-        <!--        {% endfor %}-->
-        <!--    </ul>-->
-        <!--</div>-->
+        <div class="row">
+            <ul>
+                {% for shopping_item in shopping_list.shopping_items %}
+                <li>
+                    <div class="col-xs-6">
+                        {{ shopping_item.name }}
+                    </div>
+                    <div class="col-xs-6">
+                        {{ shopping_item.quantity }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
+
+{% include 'lists/add_items_js.html' %}
 
 {% endblock %}

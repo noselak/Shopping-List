@@ -92,6 +92,7 @@ class AddItemsToListView(View):
         template = 'lists/add_items_to_list.html'
         context = {
             'shopping_list': shopping_list,
+            'test': 'test',
         }
         return render(request, template, context)
 
@@ -99,23 +100,40 @@ class AddItemsToListView(View):
     def post(self, request, pk):
         shopping_list = ShoppingList.objects.get(pk=pk)
         item_pk = request.POST.get('item-pk')
+        item_name = request.POST.get('item-name')
         item = None
         
+        # Checks if user adds predefined item
         try:
             item = Item.objects.get(pk=item_pk)
         except:
             pass
         
+        # If user adds predefined item: creating or getting ShoppingItem 
+        # instance and adding foreignkey relation
         if item:
             obj, created = ShoppingItem.objects.get_or_create(
                     item=item, shopping_list=shopping_list)
-            
-            if not created:
-                obj.quantity = obj.quantity + 1
-                obj.save()
 
+        # Else creating or getting an custom ShoppingItem instance with no 
+        # relation to Item model
         else:
-            obj = ShoppingItem.objects.create(
-                    shopping_list=shopping_list)
+            obj, created = ShoppingItem.objects.get_or_create(
+                    name=item_name, shopping_list=shopping_list)
+            
+            # Check if custom ShoppingItem instance exists in Item model.Check
+            # If yes: creating relation with found Item instance.
 
-        return redirect('lists:shopping_list_detail_view', pk=shopping_list.pk)
+            try:
+                item = Item.objects.get(name=item_name)
+                obj.item = item
+                obj.save()
+            except:
+                pass
+
+        # If object was already created: updating quantity.
+        if not created:
+            obj.quantity = obj.quantity + 1
+            obj.save()
+
+        return redirect('lists:add_items_to_list_view', pk=shopping_list.pk)
