@@ -4,6 +4,32 @@
     (function() {
         $('#search-items').keyup(function(event) {
             var q = $(this).val()
+            
+            $('.search-result ul').empty()
+
+            if (q) {
+                var submit_button = $('<button>').attr('class', 'form-control-feedback fui-plus');
+
+                var csrf_token = $('<input>');
+                csrf_token.attr('type', 'hidden')
+                    .attr('name', 'csrfmiddlewaretoken')
+                    .attr('value', '{{ csrf_token }}');
+
+                var item_name = $('<input>');
+                item_name.attr('type', 'hidden')
+                    .attr('name', 'item-name')
+                    .attr('value', q);
+
+                var result = $('<form>')
+                    .attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}')
+                    .attr('method', 'POST')
+                    .append(item_name)
+                    .append(csrf_token)
+                    .append(q)
+                    .append(submit_button);
+
+                $('.search-result ul').prepend($('<li>').append(result));
+            }
 
             $.ajax({
                 type: 'GET',
@@ -14,48 +40,21 @@
                     'shopping_list_pk': '{{ shopping_list.pk }}',
                 },
                 success: function(data) {
-                    $('.search-result ul').empty()
-
-                    if (q) {
-                        var submit_button = $('<button>').attr('class', 'form-control-feedback fui-plus');
-
-                        var csrf_token = $('<input>');
-                        csrf_token.attr('type', 'hidden')
-                            .attr('name', 'csrfmiddlewaretoken')
-                            .attr('value', '{{ csrf_token }}');
-                            
-                        var item_name = $('<input>');
-                        item_name.attr('type', 'hidden')
-                            .attr('name', 'item-name')
-                            .attr('value', q);
-
-                        var result = $('<form>')
-                            .attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}')
-                            .attr('method', 'POST')
-                            .append(item_name)
-                            .append(csrf_token)
-                            .append(q)
-                            .append(submit_button);
-
-                        $('.search-result ul').prepend($('<li>').append(result));
-                    }
-
-                    $('.search-result ul').append(data);
-
+                    $('.search-result ul').prepend(data);
                 },
                 error: function(data) {
                     console.log('Ajax Error');
                 }
             });
         });
-        
-        $('.select-block').change(function(event){
+
+        $('.select-block').change(function(event) {
             event.preventDefault();
             var quantity = $(this).val();
             var item_pk = $(this).attr('item-pk');
-            
+
             console.log(item_pk);
-            
+
             $.ajax({
                 type: 'POST',
                 url: '{% url "lists:edit_items_view" %}',
