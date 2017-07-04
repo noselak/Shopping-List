@@ -12,11 +12,13 @@ class ListCreateForm(forms.ModelForm):
                 'placeholder': self.fields[field].label
             })
             if field == 'date':
-                self.fields[field].widget.attrs.update({
-                'class': 'form-control datepicker',
-                'placeholder': self.fields[field].label
-            })
-    
+                self.fields[field].widget.attrs.update(
+                    {
+                        'class': 'form-control datepicker',
+                        'placeholder': self.fields[field].label
+                    }
+                )
+
     class Meta:
         model = ShoppingList
         fields = ['name', 'shop', 'date']
@@ -25,5 +27,3 @@ class ListCreateForm(forms.ModelForm):
             'shop': 'Shop',
             'date': 'Date',
         }
-        
-    

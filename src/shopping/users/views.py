@@ -8,15 +8,15 @@ from .forms import LoginForm, RegisterForm
 
 class LoginView(View):
     template = 'users/login.html'
-    
+
     def get(self, request):
         login_form = LoginForm(None)
         context = {
             'login_form': login_form,
         }
         return render(request, self.template, context)
-        
-    
+
+
     def post(self, request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -36,18 +36,18 @@ class LoginView(View):
                 messages.error(request, 'Wrong password and/or username', 
                                 extra_tags='login')
                 return redirect('users:login_view')
-                
-                
+
+
 class RegisterView(View):
     template = 'users/register.html'
-    
+
     def get(self, request):
         register_form = RegisterForm(None)
         context = {
             'register_form': register_form,
         }
         return render(request, self.template, context)
-        
+
     def post(self, request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
@@ -60,10 +60,8 @@ class RegisterView(View):
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('main:main_page_view')
-            
+
         context = {
             'register_form': register_form,
         }
         return render(request, self.template, context)
-            
-            

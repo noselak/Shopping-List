@@ -98,6 +98,7 @@ html, body {
 
 .lists-list {
     padding: 0;
+    margin-bottom: 30px;
 }
 
 .lists-list > li {
@@ -172,9 +173,13 @@ html, body {
     margin-bottom: 30px;
 }
 
+.add-list-form button {
+    width: 120px;
+}
+
 .add-items-list-wrapper {
     display: block;
-    height: 100%;
+    min-height: 100%;
     background: #2C3E50;
     color: #FFF;
 }
@@ -221,6 +226,8 @@ html, body {
 .add-items-list-wrapper .fui-plus {
     pointer-events: auto;
     border: none;
+    padding: 0;
+    margin-right: 8px;
 }
 
 .form-control-feedback:hover {
@@ -247,6 +254,27 @@ html, body {
     margin-right: 0;
     padding: 10px 0px;
 }
+
+.add-items-list-wrapper .mbl {
+    min-width: inherit;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    padding: 3px;
+}
+
+.add-items-list-wrapper .todo-right {
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.add-items-list-wrapper .fui-trash {
+    color: #16a085;
+}
+
+.add-items-list-wrapper button:hover .fui-trash {
+    color: #1ABC9C;
+}
+
 
 
 /*list detail*/

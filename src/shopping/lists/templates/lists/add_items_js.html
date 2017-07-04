@@ -48,5 +48,29 @@
                 }
             });
         });
+        
+        $('.select-block').change(function(event){
+            event.preventDefault();
+            var quantity = $(this).val();
+            var item_pk = $(this).attr('item-pk');
+            
+            console.log(item_pk);
+            
+            $.ajax({
+                type: 'POST',
+                url: '{% url "lists:edit_items_view" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'quantity': quantity,
+                    'pk': item_pk
+                },
+                success: function(data) {
+                    console.log('Ajax Success');
+                },
+                error: function(data) {
+                    console.log('Ajax Error');
+                }
+            });
+        });
     })();
 </script>

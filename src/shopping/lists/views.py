@@ -89,12 +89,13 @@ class AddItemsToListView(View):
     @method_decorator(login_required(login_url='users:login_view'))
     def get(self, request, pk):
         shopping_list = ShoppingList.objects.get(pk=pk)
-        template = 'lists/add_items_to_list.html'
-        context = {
-            'shopping_list': shopping_list,
-            'test': 'test',
-        }
-        return render(request, template, context)
+        if shopping_list.user == request.user:
+            template = 'lists/add_items_to_list.html'
+            context = {
+                'shopping_list': shopping_list,
+            }
+            return render(request, template, context)
+        return redirect('lists:main_page_view')
 
     @method_decorator(login_required(login_url='users:login_view'))
     def post(self, request, pk):
@@ -102,38 +103,69 @@ class AddItemsToListView(View):
         item_pk = request.POST.get('item-pk')
         item_name = request.POST.get('item-name')
         item = None
-        
-        # Checks if user adds predefined item
-        try:
-            item = Item.objects.get(pk=item_pk)
-        except:
-            pass
-        
-        # If user adds predefined item: creating or getting ShoppingItem 
-        # instance and adding foreignkey relation
-        if item:
-            obj, created = ShoppingItem.objects.get_or_create(
-                    item=item, shopping_list=shopping_list)
 
-        # Else creating or getting an custom ShoppingItem instance with no 
-        # relation to Item model
-        else:
-            obj, created = ShoppingItem.objects.get_or_create(
-                    name=item_name, shopping_list=shopping_list)
-            
-            # Check if custom ShoppingItem instance exists in Item model.Check
-            # If yes: creating relation with found Item instance.
-
+        if shopping_list.user == request.user:
+        
+            # Checks if user adds predefined item
             try:
-                item = Item.objects.get(name=item_name)
-                obj.item = item
-                obj.save()
+                item = Item.objects.get(pk=item_pk)
             except:
                 pass
-
-        # If object was already created: updating quantity.
-        if not created:
-            obj.quantity = obj.quantity + 1
-            obj.save()
+            
+            # If user adds predefined item: creating or getting ShoppingItem 
+            # instance and adding foreignkey relation
+            if item:
+                obj, created = ShoppingItem.objects.get_or_create(
+                        item=item, shopping_list=shopping_list)
+    
+            # Else creating or getting an custom ShoppingItem instance with no 
+            # relation to Item model
+            else:
+                obj, created = ShoppingItem.objects.get_or_create(
+                        name=item_name, shopping_list=shopping_list)
+                
+                # Check if custom ShoppingItem instance exists in Item model.Check
+                # If yes: creating relation with found Item instance.
+    
+                try:
+                    item = Item.objects.get(name=item_name)
+                    obj.item = item
+                    obj.save()
+                except:
+                    pass
+    
+            # If object was already created: updating quantity.
+            if not created:
+                obj.quantity = obj.quantity + 1
+                obj.save()
 
         return redirect('lists:add_items_to_list_view', pk=shopping_list.pk)
+
+
+class DeleteItemsFromListView(View):
+    @method_decorator(login_required(login_url='users:login_view'))
+    def post(self, request, pk):
+        shopping_item = ShoppingItem.objects.get(pk=pk)
+        shopping_list = shopping_item.shopping_list
+
+        if shopping_list.user == request.user:
+            shopping_item.delete()
+
+        return redirect('lists:add_items_to_list_view',
+                pk=shopping_list.pk)
+
+
+class EditItemsView(View):
+    @method_decorator(login_required(login_url='users:login_view'))
+    def post(self, request):
+        quantity = int(request.POST.get('quantity'))
+        pk = int(request.POST.get('pk'))
+        shopping_item = ShoppingItem.objects.get(pk=pk)
+        shopping_list = shopping_item.shopping_list
+
+        if shopping_list.user == request.user:
+            shopping_item.quantity = quantity
+            shopping_item.save()
+
+        return redirect('lists:add_items_to_list_view',
+                pk=shopping_list.pk)
