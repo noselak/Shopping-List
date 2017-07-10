@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^items/', include('items.urls', namespace="items")),
     url(r'^admin/', admin.site.urls),
     url(r'', include('main.urls', namespace="main")),
-    url(r'^api/lists/', include('lists.api.urls', namespace="lists-api")),
+    url(r'^api/lists/', include('lists.api.urls', namespace="lists_api")),
+    url(r'^api/items/', include('items.api.urls', namespace="items_api")),
 ]
 
 if settings.DEBUG == True:
