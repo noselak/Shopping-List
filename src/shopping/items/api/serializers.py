@@ -18,7 +18,18 @@ class CategorySerializer(ModelSerializer):
         fields = ('name', 'items_url')
 
 
+class ItemsListSerializer(ModelSerializer):
+    item_url = HyperlinkedIdentityField(
+        view_name='items_api:item_detail_api_view',
+        lookup_field='pk'
+        )
+
+    class Meta:
+        model = Item
+        fields = ('name', 'category', 'item_url')
+
+
 class ItemsSerializer(ModelSerializer):
     class Meta:
         model = Item
-        fields = ('name', 'pk', 'category')
+        fields = ('name', 'category')

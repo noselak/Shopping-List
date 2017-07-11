@@ -8,6 +8,8 @@ urlpatterns = [
             name='shopping_items_api_view'),
     url(r'^add/$', views.AddShoppingListAPIView.as_view(), 
             name="add_shopping_list_api_view"),
+    url(r'^add-item/$', views.AddShoppingItemAPIView.as_view(), 
+            name="add_shopping_item_api_view"),
     url(r'^$', views.ShoppingListsAPIView.as_view(), 
             name="shopping_lists_api_view"),
 ]

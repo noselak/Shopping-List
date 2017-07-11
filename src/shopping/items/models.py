@@ -12,12 +12,6 @@ class Category(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=15)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    user = models.ForeignKey(
-                            User,
-                            on_delete=models.CASCADE,
-                            null=True,
-                            blank=True
-                            )
     accepted = models.BooleanField(default=False)
 
     def __str__(self):

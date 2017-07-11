@@ -12,10 +12,10 @@ class ShoppingListsSerializer(ModelSerializer):
         view_name='lists_api:shopping_list_detail_api_view',
         lookup_field='pk'
         )
-    
+
     class Meta:
         model = ShoppingList
-        fields = ('name', 'pk', 'shop', 'date', 'timestamp', 'list_detail_url')
+        fields = ('name', 'shop', 'date', 'timestamp', 'list_detail_url')
 
 
 class ShoppingListCreateSerializer(ModelSerializer):
@@ -26,10 +26,15 @@ class ShoppingListCreateSerializer(ModelSerializer):
 
 class ShoppingListDetailSerializer(ModelSerializer):
     shopping_items = SerializerMethodField()
+    shopping_items_url = HyperlinkedIdentityField(
+        view_name='lists_api:shopping_items_api_view',
+        lookup_field='pk'
+        )
 
     class Meta:
         model = ShoppingList
-        fields = ('name', 'shop', 'date', 'timestamp', 'shopping_items')
+        fields = ('name', 'shop', 'date', 'timestamp', 'shopping_items_url',
+                  'shopping_items')
 
     def get_shopping_items(self, obj):
         shopping_list = ShoppingList.objects.get(pk=obj.pk)
@@ -38,6 +43,15 @@ class ShoppingListDetailSerializer(ModelSerializer):
 
 
 class ShoppingItemSerializer(ModelSerializer):
+
     class Meta:
         model = ShoppingItem
-        fields = ('name', 'item', 'quantity', 'bought')
+        fields = ('name', 'item', 'quantity', 'bought', 'shopping_list')
+
+
+class CreateShoppingItemSerializer(ShoppingItemSerializer):
+
+    def __init__(self, *args, **kwargs):
+        super(CreateShoppingItemSerializer, self).__init__(*args, **kwargs)
+        self.fields['shopping_list'].queryset = ShoppingList.objects \
+            .filter(user=self.context['request'].user)

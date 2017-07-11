@@ -12,7 +12,8 @@ from .serializers import (
     ShoppingListsSerializer,
     ShoppingListDetailSerializer,
     ShoppingListCreateSerializer,
-    ShoppingItemSerializer
+    ShoppingItemSerializer,
+    CreateShoppingItemSerializer
     )
 from .permissions import IsOwner
 
@@ -53,3 +54,7 @@ class ShoppingItemsAPIView(ListAPIView):
                                             .get(pk=self.kwargs.get('pk'))
         qs = shopping_list.shoppingitem_set.all()
         return qs
+
+
+class AddShoppingItemAPIView(CreateAPIView):
+    serializer_class = CreateShoppingItemSerializer
