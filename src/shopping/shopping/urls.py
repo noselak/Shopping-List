@@ -22,10 +22,12 @@ urlpatterns = [
     url(r'^users/', include('users.urls', namespace="users")),
     url(r'^lists/', include('lists.urls', namespace="lists")),
     url(r'^items/', include('items.urls', namespace="items")),
+    url(r'^charts/', include('charts.urls', namespace="charts")),
     url(r'^admin/', admin.site.urls),
     url(r'', include('main.urls', namespace="main")),
     url(r'^api/lists/', include('lists.api.urls', namespace="lists_api")),
     url(r'^api/items/', include('items.api.urls', namespace="items_api")),
+    url(r'^api/charts/', include('charts.api.urls', namespace="charts_api")),
 ]
 
 if settings.DEBUG == True:

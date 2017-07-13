@@ -43,14 +43,12 @@ class ShoppingListDetailSerializer(ModelSerializer):
 
 
 class ShoppingItemSerializer(ModelSerializer):
-
     class Meta:
         model = ShoppingItem
         fields = ('name', 'item', 'quantity', 'bought', 'shopping_list')
 
 
 class CreateShoppingItemSerializer(ShoppingItemSerializer):
-
     def __init__(self, *args, **kwargs):
         super(CreateShoppingItemSerializer, self).__init__(*args, **kwargs)
         self.fields['shopping_list'].queryset = ShoppingList.objects \

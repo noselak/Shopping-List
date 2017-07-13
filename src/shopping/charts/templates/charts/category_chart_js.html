@@ -1,0 +1,46 @@
+<script>
+    (function() {
+        var labels = [];
+        var values = [];
+        
+        $.ajax({
+            type: 'GET',
+            url: '{% url "charts_api:shopping_items_counts_api_view" %}',
+            success: function(data) {
+                labels = data.labels;
+                values = data.values;
+                
+                var ctx = document.getElementById('category-chart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'doughnut',
+
+                    // The data for our dataset
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Shopping Items",
+                            backgroundColor: [
+                                '#1ABC9C',
+                                '#2ECC71',
+                                '#3498DB',
+                                '#9B59B6',
+                                '#34495E',
+                                '#F1C40F',
+                                '#E67E22',
+                                '#E74C3C'
+                            ],
+                            // borderColor: 'rgb(255, 99, 132)',
+                            data: values,
+                        }]
+                    },
+
+                    // Configuration options go here
+                    options: {
+                        responsive: true
+                    }
+                });
+            }
+        });
+    })();
+</script>

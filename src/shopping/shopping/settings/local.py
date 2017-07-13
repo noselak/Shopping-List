@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'lists',
     'items',
     'users',
+    'charts',
 ]
 
 MIDDLEWARE = [

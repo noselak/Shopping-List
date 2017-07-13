@@ -364,6 +364,19 @@ html, body {
     color: #1ABC9C;
 }
 
+/*charts*/
+.charts-wrapper {
+    color: #7F8C8D;
+    display: block;
+    min-height: 100%;
+    background: #ECF0F1;
+}
+
+.charts-wrapper h6 {
+    font-weight: 300;
+    margin-top: 75px;
+}
+
 
 /*login*/
 
