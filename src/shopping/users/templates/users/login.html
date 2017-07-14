@@ -14,6 +14,11 @@
             <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                 <form class="login-form" method="POST">
                     {% csrf_token %}
+                    {% for message in messages %}
+                        {% if "login" in message.tags %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
                     <div class="form-group">
                         {{ login_form.username }}
                         <label class="login-field-icon fui-user" for="login-name"></label>

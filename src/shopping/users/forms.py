@@ -9,7 +9,7 @@ from django import forms
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-                               label="Username / E-mail", max_length=30,
+                               label="Username", max_length=30,
                                widget=forms.TextInput(attrs={
                                     'placeholder': 'Enter Your Name',
                                     'class': 'form-control login-field',
@@ -73,6 +73,7 @@ class RegisterForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
-        if email and User.objects.filter(email=email).exclude(username=username).exists():
-            raise forms.ValidationError(u'Na ten e-mail już założono konto')
+        if email and User.objects.filter(email=email) \
+                                 .exclude(username=username).exists():
+            raise forms.ValidationError(u'This e-mail already exists in the database')
         return email

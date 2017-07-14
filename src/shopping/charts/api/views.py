@@ -3,6 +3,8 @@ from rest_framework.response import Response
 
 from .utils import filter_by_time_period, get_ordered_data
 
+from lists.models import ShoppingList, ShoppingItem
+
 
 class ShoppingItemsCountsAPIView(APIView):
     def get(self, request):
@@ -29,5 +31,6 @@ class ShoppingItemsCountsAPIView(APIView):
             'labels': labels,
             'values': values
         }
-
+        
+        # Pushing response to chart app front-end.
         return Response(response)

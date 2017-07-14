@@ -79,7 +79,7 @@ html, body {
     color: #ECF0F1;
     display: block;
     min-height: 100%;
-    background: #3498DB;
+    background: #2980B9;
 }
 
 .lists-wrapper h6 {
@@ -375,6 +375,12 @@ html, body {
 .charts-wrapper h6 {
     font-weight: 300;
     margin-top: 75px;
+}
+
+.charts-wrapper #time-select {
+    padding: 5px;
+    margin-bottom: 40px;
+    width: 100%;
 }
 
 

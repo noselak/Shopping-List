@@ -6,6 +6,7 @@ from django.db.models import Sum
 
 from lists.models import ShoppingList, ShoppingItem
 
+
 def filter_by_time_period(request, time_period):
     today = datetime.datetime.today()
     previous_date = None

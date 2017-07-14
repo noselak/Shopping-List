@@ -31,11 +31,14 @@ class LoginView(View):
                     messages.error(request, 
                                 'User {} has been blocked'.format(username), 
                                 extra_tags='login')
-                    return redirect('users:login_view')
             else:
-                messages.error(request, 'Wrong password and/or username', 
+                messages.error(request, 'Incorrect password and/or username', 
                                 extra_tags='login')
-                return redirect('users:login_view')
+        print('error')
+        context = {
+            'login_form': login_form,
+        }
+        return render(request, self.template, context)
 
 
 class RegisterView(View):
