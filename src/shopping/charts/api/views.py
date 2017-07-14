@@ -1,35 +1,30 @@
-from collections import OrderedDict
-
-from django.db.models import Sum
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from lists.models import ShoppingList, ShoppingItem
+from .utils import filter_by_time_period, get_ordered_data
 
 
 class ShoppingItemsCountsAPIView(APIView):
     def get(self, request):
-        shopping_lists = ShoppingList.objects.filter(user=self.request.user)
-        shopping_items = ShoppingItem.objects \
-                                     .filter(shopping_list__in=shopping_lists) \
-                                     .filter(bought=True)
-        item_names = [name.get('name') for name in
-                      shopping_items.values('name').distinct()]
+        time_period = request.GET.get('time-period')
 
-        item_quantities = dict()
+        # Checking for time period. If true: returning queryset filtered by 
+        # date and user.
+        if time_period:
+            shopping_lists = filter_by_time_period(self.request, time_period)
+        else:
+            shopping_lists = ShoppingList.objects \
+                .filter(user=self.request.user)
 
-        for name in item_names:
-            quantity = shopping_items.filter(name=name) \
-                                     .aggregate(Sum('quantity')) \
-                                     .get('quantity__sum')
-            item_quantities[name] = quantity
+        # Getting ordered dictionary with shopping item names and quantities.
+        # Ordered by quantity descending
+        ordered_data = get_ordered_data(shopping_lists)
 
-        data = OrderedDict(sorted(item_quantities.items(),
-                           key=lambda t: t[1], reverse=True))
-        
-        labels = [key for key in data.keys()]
-        values = [value for value in data.values()]
-        
+        # Creating lists of item's labels and values. Returns 10 most
+        # popular items.
+        labels = [key for key in ordered_data.keys()][:10]
+        values = [value for value in ordered_data.values()][:10]
+
         response = {
             'labels': labels,
             'values': values
