@@ -15,7 +15,7 @@ class ListCreateForm(forms.ModelForm):
                 self.fields[field].widget.attrs.update(
                     {
                         'class': 'form-control datepicker',
-                        'placeholder': self.fields[field].label
+                        'placeholder': self.fields[field].label,
                     }
                 )
 
