@@ -1,0 +1,24 @@
+<script>
+    (function(){
+        $('#list-sort').change(function(event) {
+            var sort_by = $('#list-sort').val()
+            console.log(sort_by);
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "lists:shopping_list_detail_view" pk=shopping_list.pk %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'sort_by': sort_by
+                },
+                success: function(data) {
+                    var result = $(data).find(".list-items");
+                    $('.list-items').html(result);
+                },
+                error: function(data) {
+                    console.log('Ajax Error');
+                }
+            });
+        });
+    })();
+</script>

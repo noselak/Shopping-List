@@ -19,18 +19,44 @@ class ShoppingListsView(LoginRequiredMixin, ListView):
     context_object_name = 'shopping_lists'
 
     def get_queryset(self):
-        return ShoppingList.objects.filter(user=self.request.user)
+        return ShoppingList.objects.filter(user=self.request.user) \
+            .filter(archived=False)
 
 
-class ShoppingListDetailView(LoginRequiredMixin, DetailView):
+class ShoppingListsArchiveView(LoginRequiredMixin, ListView):
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
-    template_name = 'lists/shopping_list_detail.html'
-    context_object_name = 'shopping_list'
+    template_name = 'lists/shopping_lists_archive.html'
+    context_object_name = 'shopping_lists'
 
     def get_queryset(self):
-        return ShoppingList.objects.filter(user=self.request.user)
+        return ShoppingList.objects.filter(user=self.request.user) \
+            .filter(archived=True)
+
+
+class ShoppingListDetailView(View):
+    def get(self, request, pk):
+        template = 'lists/shopping_list_detail.html'
+        shopping_list = ShoppingList.objects.get(pk=pk)
+        shopping_items = shopping_list.shopping_items
+        
+        sort_request = request.GET.get('sort_by')
+        if sort_request == 'name':
+            shopping_items = shopping_items.order_by('name')
+        elif sort_request == 'category':
+            shopping_items = shopping_items.order_by('item__category')
+        elif sort_request == 'bought':
+            shopping_items = shopping_items.order_by('bought')
+        
+        context = {
+            'shopping_list': shopping_list,
+            'shopping_items': shopping_items,
+        }
+        if shopping_list.user == request.user:
+            return render(request, template, context)
+        
+        return redirect('lists:main_page_view')
 
 
 class ShoppingListDeleteView(View):
@@ -39,6 +65,16 @@ class ShoppingListDeleteView(View):
         shopping_list = ShoppingList.objects.get(pk=pk)
         if shopping_list.user == self.request.user:
             shopping_list.delete()
+        return redirect('lists:shopping_lists_view')
+
+
+class ArchiveShoppingListView(View):
+    @method_decorator(login_required(login_url='users:login_view'))
+    def post(self, request, pk):
+        shopping_list = ShoppingList.objects.get(pk=pk)
+        if shopping_list.user == self.request.user:
+            shopping_list.archived = True
+            shopping_list.save()
         return redirect('lists:shopping_lists_view')
 
 
@@ -105,35 +141,35 @@ class AddItemsToListView(View):
         item = None
 
         if shopping_list.user == request.user:
-        
+
             # Checks if user adds predefined item
             try:
                 item = Item.objects.get(pk=item_pk)
             except:
                 pass
-            
-            # If user adds predefined item: creating or getting ShoppingItem 
+
+            # If user adds predefined item: creating or getting ShoppingItem
             # instance and adding foreignkey relation
             if item:
                 obj, created = ShoppingItem.objects.get_or_create(
                         item=item, shopping_list=shopping_list)
-    
-            # Else creating or getting an custom ShoppingItem instance with no 
+
+            # Else creating or getting an custom ShoppingItem instance with no
             # relation to Item model
             else:
                 obj, created = ShoppingItem.objects.get_or_create(
                         name=item_name, shopping_list=shopping_list)
-                
-                # Check if custom ShoppingItem instance exists in Item model.Check
+
+                # Check if custom ShoppingItem instance exists in Item model.
                 # If yes: creating relation with found Item instance.
-    
+
                 try:
                     item = Item.objects.get(name=item_name)
                     obj.item = item
                     obj.save()
                 except:
                     pass
-    
+
             # If object was already created: updating quantity.
             if not created:
                 obj.quantity = obj.quantity + 1
@@ -152,7 +188,7 @@ class DeleteItemsFromListView(View):
             shopping_item.delete()
 
         return redirect('lists:add_items_to_list_view',
-                pk=shopping_list.pk)
+                        pk=shopping_list.pk)
 
 
 class EditItemsView(View):
@@ -168,4 +204,4 @@ class EditItemsView(View):
             shopping_item.save()
 
         return redirect('lists:add_items_to_list_view',
-                pk=shopping_list.pk)
+                        pk=shopping_list.pk)

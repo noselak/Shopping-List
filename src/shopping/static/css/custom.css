@@ -86,11 +86,16 @@ html, body {
     background: #2980B9;
 }
 
+.archive {
+    background: #27AE60;
+}
+
 .lists-wrapper h6 {
     margin-top: 75px;
     font-weight: 300;
     margin-bottom: 30px;
 }
+    
 
 .lists-wrapper a {
     color: #ECF0F1;
@@ -298,6 +303,14 @@ html, body {
 .detail-wrapper h6 {
     font-weight: 300;
     margin-top: 75px;
+}
+
+.detail-wrapper #list-sort {
+    padding: 5px;
+    margin-bottom: 40px;
+    width: 100%;
+    color: #ECF0F1;
+    background: #16A085;
 }
 
 .list-desc {

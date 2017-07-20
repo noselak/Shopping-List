@@ -9,10 +9,18 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-12">
+                <select id="list-sort" class="form-control select select-primary select-block mbl">
+                    <option value="pk">Sort by order of addition</option>
+                    <option value="category">Sort by category</option>
+                    <option value="name">Sort by name</option>
+                    <option value="bought">Sort by bought</option>
+                </select>
+            </div>
             <div class="col-md-12 col-xs-12">
                 <div class="todo list-items">
                     <ul>
-                        {% for item in shopping_list.shopping_items %}
+                        {% for item in shopping_items %}
                         <li class="list-item {% if item.bought %} todo-done {% endif %}" list-item-pk="{{item.pk}}">
                             <div class="todo-icon fui-tag"></div>
                             <div class="todo-content">
@@ -34,5 +42,7 @@
         </a>
     </div>
 </div>
+
+{% include 'lists/shopping_list_detail_js.html' %}
 
 {% endblock %}

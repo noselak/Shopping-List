@@ -1,12 +1,11 @@
-{% extends 'base.html' %} {% block head_title %}My Shopping Lists {% endblock %} {% block content %} {% load staticfiles %}
+{% extends 'base.html' %} {% block head_title %}Archived Shopping Lists {% endblock %} {% block content %} {% load staticfiles %}
 
-<div class="lists-wrapper">
+<div class="lists-wrapper archive">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h6>My Lists</h6>
+                <h6>Archived Lists</h6>
             </div>
-          
             <div class="col-md-12">
                 <ul class="lists-list">
                     {% for list in shopping_lists %}
@@ -20,10 +19,10 @@
                             <small>{{ list.date }}</small>
                         </div>
                         </a>
-                        <form method="POST" action="{% url 'lists:archive_shopping_list_view' pk=list.pk %}">
+                        <form method="POST" action="{% url 'lists:shopping_list_delete_view' pk=list.pk %}">
                             {% csrf_token %}
                             <div class="todo-right pull-right">
-                                <button><span class="fui-cross-circle"></span></button>
+                                <button><span class="fui-trash"></span></button>
                             </div>
                         </form>
                     </li>
@@ -31,10 +30,6 @@
                 </ul>
             </div>
         </div>
-        <a href="{% url 'lists:add_shopping_list_view' %}">
-            <div class="add-items-plus">
-            </div>
-        </a>
     </div>
 </div>
 

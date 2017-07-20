@@ -12,6 +12,7 @@ class ShoppingList(models.Model):
     shop = models.CharField(max_length=15)
     date = models.DateField()
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    archived = models.BooleanField(default=False)
 
     @property
     def shopping_items(self):
