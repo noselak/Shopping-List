@@ -21,6 +21,8 @@ urlpatterns = [
             name="mark_shopping_item_view"),
     url(r'^archive/$', views.ShoppingListsArchiveView.as_view(),
             name="shopping_lists_archive_view"),
+    url(r'^search/$', views.ShoppingListsSearchView.as_view(),
+            name='shopping_lists_search_view'),
     url(r'^$', views.ShoppingListsView.as_view(),
             name='shopping_lists_view'),
 ]

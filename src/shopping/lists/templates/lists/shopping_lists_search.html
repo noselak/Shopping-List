@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block head_title %}Search results{% endblock %} {% block content %} {% load staticfiles %}
+
+<div class="lists-wrapper search-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h6>Search Results</h6>
+            </div>
+          
+            <div class="col-md-12">
+                <ul class="lists-list">
+                    {% for list in shopping_lists %}
+                    <li>
+                        <a href="{% url 'lists:shopping_list_detail_view' pk=list.pk %}">
+                        <div class="todo-icon fui-list"></div>
+                        <div class="todo-content">
+                            <h4 class="todo-name">
+                                <strong>{{ list.name }}</strong> in {{ list.shop }}
+                            </h4>
+                            <small>{{ list.date }}</small>
+                        </div>
+                        </a>
+                        <form method="POST" action="{% url 'lists:archive_shopping_list_view' pk=list.pk %}">
+                            {% csrf_token %}
+                            <div class="todo-right pull-right">
+                                <button><span class="fui-cross-circle"></span></button>
+                            </div>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

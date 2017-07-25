@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from items.models import Item
 
@@ -23,6 +24,27 @@ class ShoppingListsView(LoginRequiredMixin, ListView):
             .filter(archived=False)
 
 
+class ShoppingListsSearchView(LoginRequiredMixin, ListView):
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    template_name = 'lists/shopping_lists_search.html'
+    context_object_name = 'shopping_lists'
+
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        shopping_lists = ShoppingList.objects.filter(user=self.request.user) \
+            .filter(archived=False)
+
+        if q:
+            shopping_lists = shopping_lists.filter(
+                Q(name__icontains=q) |
+                Q(shop__icontains=q)
+                ).distinct()
+            print(shopping_lists)
+        return shopping_lists
+
+
 class ShoppingListsArchiveView(LoginRequiredMixin, ListView):
     login_url = '/'
     redirect_field_name = 'redirect_to'
@@ -40,7 +62,7 @@ class ShoppingListDetailView(View):
         template = 'lists/shopping_list_detail.html'
         shopping_list = ShoppingList.objects.get(pk=pk)
         shopping_items = shopping_list.shopping_items
-        
+
         sort_request = request.GET.get('sort_by')
         if sort_request == 'name':
             shopping_items = shopping_items.order_by('name')
@@ -48,14 +70,14 @@ class ShoppingListDetailView(View):
             shopping_items = shopping_items.order_by('item__category')
         elif sort_request == 'bought':
             shopping_items = shopping_items.order_by('bought')
-        
+
         context = {
             'shopping_list': shopping_list,
             'shopping_items': shopping_items,
         }
         if shopping_list.user == request.user:
             return render(request, template, context)
-        
+
         return redirect('lists:main_page_view')
 
 

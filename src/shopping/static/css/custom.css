@@ -90,6 +90,10 @@ html, body {
     background: #27AE60;
 }
 
+.search-wrapper {
+    background: #9B59B6;
+}
+
 .lists-wrapper h6 {
     margin-top: 75px;
     font-weight: 300;

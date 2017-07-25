@@ -1,4 +1,4 @@
-list/settings/local.py
+src/shopping/shopping/settings/local.py
 
 .DS_Store
 # Byte-compiled / optimized / DLL files
@@ -95,3 +95,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+; git stuff
+.git/
