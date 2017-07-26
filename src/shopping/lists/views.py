@@ -41,7 +41,6 @@ class ShoppingListsSearchView(LoginRequiredMixin, ListView):
                 Q(name__icontains=q) |
                 Q(shop__icontains=q)
                 ).distinct()
-            print(shopping_lists)
         return shopping_lists
 
 

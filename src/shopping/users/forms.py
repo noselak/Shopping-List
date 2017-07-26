@@ -1,5 +1,4 @@
 from django.contrib.auth.forms import (
-    AuthenticationForm,
     PasswordChangeForm,
     UserCreationForm
 )
@@ -77,3 +76,33 @@ class RegisterForm(UserCreationForm):
                                  .exclude(username=username).exists():
             raise forms.ValidationError(u'This e-mail already exists in the database')
         return email
+
+
+class PasswordChangeCustomForm(PasswordChangeForm):
+    old_password = forms.CharField(
+                                   label="Password",
+                                   max_length=30,
+                                   widget=forms.TextInput(attrs={
+                                        'placeholder': 'Old Password',
+                                        'class': 'form-control login-field',
+                                        'type': 'password'
+                                        })
+                                   )
+    new_password1 = forms.CharField(
+                                   label="Password",
+                                   max_length=30,
+                                   widget=forms.TextInput(attrs={
+                                        'placeholder': 'Password',
+                                        'class': 'form-control login-field',
+                                        'type': 'password'
+                                        })
+                                   )
+    new_password2 = forms.CharField(
+                                   label="Confirm Password",
+                                   max_length=30,
+                                   widget=forms.TextInput(attrs={
+                                        'placeholder': 'Confirm Password',
+                                        'class': 'form-control login-field',
+                                        'type': 'password'
+                                        })
+                                    )

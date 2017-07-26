@@ -16,11 +16,19 @@
                   <ul class="dropdown-menu">
                     <li><a href="{% url 'lists:shopping_lists_view' %}">My Lists</a></li>
                     <li><a href="{% url 'lists:add_shopping_list_view' %}">Add List</a></li>
-                    <li class="divider"></li>
                     <li><a href="{% url 'lists:shopping_lists_archive_view' %}">Archive</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'charts:bought_items_chart_view' %}">Charts</a></li>
                   </ul>
                 </li>
-                <li><a href="{% url 'charts:bought_items_chart_view' %}">Charts</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Actions <b class="caret"></b></a>
+                  <span class="dropdown-arrow"></span>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'users:change_password_view' %}">Change Password</a></li>
+                    <li><a href="{% url 'users:logout_view' %}?next={{request.path}}">Logout</a></li>
+                  </ul>
+                </li>
             </ul>
             
             <a href="{% url 'users:logout_view' %}?next={{request.path}}" class="pull-right nav-logout"><span class="fui-exit"></span></a>

@@ -94,6 +94,8 @@ html, body {
     background: #9B59B6;
 }
 
+
+
 .lists-wrapper h6 {
     margin-top: 75px;
     font-weight: 300;
@@ -150,6 +152,11 @@ html, body {
 }
 
 .todo-right > button:hover .fui-trash {
+    color: #34495E;
+    transition: 0.2s ease-in-out;
+}
+
+.todo-right > button:hover .fui-cross-circle {
     color: #34495E;
     transition: 0.2s ease-in-out;
 }

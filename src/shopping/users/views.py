@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth.models import User
 
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, PasswordChangeCustomForm
 
 
 class LoginView(View):
@@ -16,7 +17,6 @@ class LoginView(View):
         }
         return render(request, self.template, context)
 
-
     def post(self, request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -28,13 +28,12 @@ class LoginView(View):
                     login(request, user)
                     return redirect('main:main_page_view')
                 else:
-                    messages.error(request, 
-                                'User {} has been blocked'.format(username), 
-                                extra_tags='login')
+                    messages.error(request,
+                                   'User {} has been blocked'.format(username),
+                                   extra_tags='login')
             else:
-                messages.error(request, 'Incorrect password and/or username', 
-                                extra_tags='login')
-        print('error')
+                messages.error(request, 'Incorrect password and/or username',
+                               extra_tags='login')
         context = {
             'login_form': login_form,
         }
@@ -59,12 +58,38 @@ class RegisterView(View):
             user = register_form.save(commit=False)
             user.set_password(password)
             user.save()
-            
+
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('main:main_page_view')
 
         context = {
             'register_form': register_form,
+        }
+        return render(request, self.template, context)
+
+
+class ChangePasswordView(View):
+    template = 'users/password_change.html'
+
+    def get(self, request):
+        password_change_form = PasswordChangeCustomForm(None)
+        context = {
+            'password_change_form': password_change_form,
+        }
+        return render(request, self.template, context)
+
+    def post(self, request):
+        password_change_form = PasswordChangeCustomForm(user=request.user,
+                                                        data=request.POST)
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password has been changed!',
+                             extra_tags='password')
+            return redirect('main:main_page_view')
+
+        context = {
+            'password_change_form': password_change_form
         }
         return render(request, self.template, context)
