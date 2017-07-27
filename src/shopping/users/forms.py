@@ -60,7 +60,7 @@ class RegisterForm(UserCreationForm):
                                     'type': 'password'
                                     })
                                )
-    email = forms.CharField(
+    email = forms.EmailField(
                                label="E-mail", max_length=30,
                                widget=forms.TextInput(attrs={
                                     'placeholder': 'E-mail',

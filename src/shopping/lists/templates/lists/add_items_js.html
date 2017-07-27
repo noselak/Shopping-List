@@ -2,8 +2,15 @@
 
 <script>
     (function() {
+        
         $('#search-items').keyup(function(event) {
             var q = $(this).val()
+            
+            var key = event.which;
+            
+            // if (keyCode == 13) {
+            //     $('#startSearch').trigger('click');
+            // }
             
             $('.search-result ul').empty()
 

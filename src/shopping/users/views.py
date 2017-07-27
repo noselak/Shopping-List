@@ -55,7 +55,9 @@ class RegisterView(View):
         if register_form.is_valid():
             username = register_form.cleaned_data['username']
             password = register_form.cleaned_data['password1']
+            email = register_form.cleaned_data['email']
             user = register_form.save(commit=False)
+            user.email = email
             user.set_password(password)
             user.save()
 
