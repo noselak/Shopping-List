@@ -6,11 +6,24 @@
         $('#search-items').keyup(function(event) {
             var q = $(this).val()
             
-            var key = event.which;
             
-            // if (keyCode == 13) {
-            //     $('#startSearch').trigger('click');
-            // }
+            var key = event.which;
+            if (key == 13) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'item-name': q,
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log('Ajax Error');
+                    }
+                });
+            }
             
             $('.search-result ul').empty()
 

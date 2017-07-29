@@ -27,7 +27,7 @@ class ShoppingList(models.Model):
 
 
 class ShoppingItem(models.Model):
-    name = models.CharField(max_length=15, blank=True, null=True)
+    name = models.CharField(max_length=30, blank=True, null=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE,
                              null=True, blank=True)
     shopping_list = models.ForeignKey('ShoppingList', on_delete=models.CASCADE)
