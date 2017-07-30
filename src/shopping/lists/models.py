@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 from items.models import Item
 
@@ -21,6 +22,9 @@ class ShoppingList(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('lists:shopping_list_detail_view', args=[str(self.pk)])
 
     class Meta:
         ordering = ['-date']

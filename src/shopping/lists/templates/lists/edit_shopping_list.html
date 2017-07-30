@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block head_title %}Edit List{% endblock %} {% block content %} {% load staticfiles %}
+
+<div class="add-list-wrapper">
+    <div class="container">
+        <div class="row">
+            <form class="add-list-form" method="POST">
+                {% csrf_token %}
+                <div class="col-sm-12">
+                    <h6>Edit List</h6>
+                </div>
+                {% for field in form %}
+                    {% if field.label == 'Date' %}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group input-group">
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-embossed btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var date_input_content = "<span class=\"input-group-addon fui-calendar\"></span>";
+
+        $('.datepicker').parent().append(date_input_content);
+        $('.datepicker').datepicker();
+        $('.fui-calendar').click(function() {
+            $('.datepicker').focus();
+        });
+    });
+</script>
+
+{% endblock %}

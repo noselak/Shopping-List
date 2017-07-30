@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -140,6 +141,12 @@ class AddShoppingListView(View):
             'list_create_form': list_create_form,
         }
         return render(request, template, context)
+
+
+class EditShoppingListView(UpdateView):
+    model = ShoppingList
+    form_class = ListCreateForm
+    template_name = 'lists/edit_shopping_list.html'
 
 
 class AddItemsToListView(View):

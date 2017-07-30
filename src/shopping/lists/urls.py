@@ -7,6 +7,8 @@ urlpatterns = [
             name='shopping_list_detail_view'),
     url(r'^(?P<pk>\d+)/delete/$', views.ShoppingListDeleteView.as_view(),
             name='shopping_list_delete_view'),
+    url(r'^(?P<pk>\d+)/edit/$', views.EditShoppingListView.as_view(),
+            name='edit_shopping_list_view'),
     url(r'^(?P<pk>\d+)/archive/$', views.ArchiveShoppingListView.as_view(),
             name='archive_shopping_list_view'),
     url(r'^(?P<pk>\d+)/add-items/$', views.AddItemsToListView.as_view(),

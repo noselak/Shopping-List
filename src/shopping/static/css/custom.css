@@ -324,6 +324,14 @@ html, body {
     background: #16A085;
 }
 
+.btn-edit {
+    width: 60px;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    background: #16A085;
+}
+
 .list-desc {
     margin-top: -15px;
     font-weight: 300;
