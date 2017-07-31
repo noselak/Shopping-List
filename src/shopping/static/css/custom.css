@@ -313,6 +313,10 @@ html, body {
 
 .detail-wrapper h6 {
     font-weight: 300;
+    margin-top: 0px;
+}
+
+.list-info {
     margin-top: 75px;
 }
 

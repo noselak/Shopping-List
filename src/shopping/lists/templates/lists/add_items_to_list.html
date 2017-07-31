@@ -37,16 +37,7 @@
                         {{ shopping_item.name }}
                     </div>
                     <div class="col-xs-3">
-                        <select class="form-control select select-primary select-block mbl" item-pk="{{ shopping_item.pk }}">
-                            {% for i in "xxxxxxxxxxx" %}
-                                {% if forloop.counter0 == shopping_item.quantity %}
-                                    <option selected value="{{ shopping_item.quantity }}">{{ shopping_item.quantity }}</option>
-                                {% elif forloop.counter0 == 0 %}
-                                {% else %}
-                                    <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
+                        <input type="number" class="form-control quantity-select" item-pk="{{ shopping_item.pk }}" value="{{ shopping_item.quantity }}">
                     </div>
                     <div class="col-xs-3">
                         <form method="POST" action="{% url 'lists:delete_items_from_list_view' pk=shopping_item.pk %}">

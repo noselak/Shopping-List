@@ -78,7 +78,7 @@ class ShoppingListDetailView(View):
         if shopping_list.user == request.user:
             return render(request, template, context)
 
-        return redirect('lists:main_page_view')
+        return redirect('main:main_page_view')
 
 
 class ShoppingListDeleteView(View):
@@ -148,6 +148,10 @@ class EditShoppingListView(UpdateView):
     form_class = ListCreateForm
     template_name = 'lists/edit_shopping_list.html'
 
+    def get_queryset(self):
+        qs = super(EditShoppingListView, self).get_queryset()
+        return qs.filter(user=self.request.user)
+
 
 class AddItemsToListView(View):
     @method_decorator(login_required(login_url='users:login_view'))
@@ -159,7 +163,7 @@ class AddItemsToListView(View):
                 'shopping_list': shopping_list,
             }
             return render(request, template, context)
-        return redirect('lists:main_page_view')
+        return redirect('main:main_page_view')
 
     @method_decorator(login_required(login_url='users:login_view'))
     def post(self, request, pk):

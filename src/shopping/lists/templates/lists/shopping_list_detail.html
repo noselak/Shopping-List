@@ -3,7 +3,7 @@
 <div class="detail-wrapper">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 list-info">
                 <h6>{{ shopping_list.name }}</h6>
                 <p class="list-desc"><small>{{ shopping_list.shop }} at {{ shopping_list.date }}</small></p>
                 <a href="{% url 'lists:edit_shopping_list_view' pk=shopping_list.pk %}" class="btn btn-block btn-primary btn-edit">Edit</a>

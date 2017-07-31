@@ -1,11 +1,10 @@
 <script>
     (function() {
-        var labels = [];
-        var values = [];
-        
         var time_period;
 
         var chart_init = function(){
+            var labels = [];
+            var values = [];
             
             $.ajax({
                 type: 'GET',
@@ -55,7 +54,8 @@
         chart_init();
         
         $('#time-select').change(function(event){
-            time_period = $(this).val()
+            time_period = $(this).val();
+            $('#category-chart').siblings().remove();
             chart_init();
         });
 
