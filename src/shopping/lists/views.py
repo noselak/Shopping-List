@@ -87,7 +87,7 @@ class ShoppingListDeleteView(View):
         shopping_list = ShoppingList.objects.get(pk=pk)
         if shopping_list.user == self.request.user:
             shopping_list.delete()
-        return redirect('lists:shopping_lists_view')
+        return redirect('lists:shopping_lists_archive_view')
 
 
 class ArchiveShoppingListView(View):

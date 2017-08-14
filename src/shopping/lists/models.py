@@ -41,6 +41,9 @@ class ShoppingItem(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-pk']
+
 
 @receiver(pre_save, sender=ShoppingItem)
 def default_name(sender, instance, *args, **kwargs):
