@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="main-icons">
-                <div class="col-xs-6 col-md-3">
+                <div class="col-xs-6 col-md-3 main-icon">
                     <div class="tile">
                         <a href="{% url 'lists:shopping_lists_view' %}">
                             <img class="img-responsive" src="{% static 'img/icons/png/Clipboard.png' %}">
@@ -12,7 +12,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-3">
+                <div class="col-xs-6 col-md-3 main-icon">
                     <div class="tile">
                         <a href="{% url 'lists:add_shopping_list_view' %}">
                             <img class="img-responsive" src="{% static 'img/icons/png/Pensils.png' %}">
@@ -20,7 +20,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-3">
+                <div class="col-xs-6 col-md-3 main-icon">
                     <div class="tile">
                         <a href="{% url 'lists:shopping_lists_archive_view' %}">
                             <img class="img-responsive" src="{% static 'img/icons/png/Book.png' %}">
@@ -28,7 +28,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-3">
+                <div class="col-xs-6 col-md-3 main-icon">
                     <div class="tile">
                         <a href="{% url 'charts:bought_items_chart_view' %}">
                             <img class="img-responsive" src="{% static 'img/icons/png/Chart3.png' %}">
@@ -40,5 +40,7 @@
         </div>
     </div>
 </div>
+
+{% include 'main/main_js.html' %}
 
 {% endblock %}

@@ -1,0 +1,11 @@
+<script>
+    (function() {
+        $(window).load(function(){
+            $('.main-icon').each(function(i){
+                setTimeout(function(){
+                    $('.main-icon').eq(i).css('opacity', 1);
+                }, i*200);
+            });
+        });
+    })();
+</script>

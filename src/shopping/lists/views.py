@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -60,7 +60,7 @@ class ShoppingListsArchiveView(LoginRequiredMixin, ListView):
 class ShoppingListDetailView(View):
     def get(self, request, pk):
         template = 'lists/shopping_list_detail.html'
-        shopping_list = ShoppingList.objects.get(pk=pk)
+        shopping_list = get_object_or_404(ShoppingList, pk=pk)
         shopping_items = shopping_list.shopping_items
 
         sort_request = request.GET.get('sort_by')

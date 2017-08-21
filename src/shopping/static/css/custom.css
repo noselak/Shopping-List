@@ -30,6 +30,11 @@ html, body {
     min-height: 122px;
 }
 
+.main-icon {
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
 .tile {
     min-height: 185px;
 }
@@ -288,7 +293,7 @@ html, body {
 }
 
 .add-items-list-wrapper .todo-right {
-    line-height: 30px;
+    line-height: 32px;
     vertical-align: middle;
 }
 
@@ -298,6 +303,15 @@ html, body {
 
 .add-items-list-wrapper button:hover .fui-trash {
     color: #1ABC9C;
+}
+
+.add-items-list-wrapper .item-name {
+    padding-top: 5px;
+}
+
+.add-items-list-wrapper .quantity-select {
+    padding: 5px 12px;
+    height: auto;
 }
 
 
