@@ -30,6 +30,11 @@ html, body {
     min-height: 122px;
 }
 
+.main-icon {
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
 .tile {
     min-height: 185px;
 }
@@ -121,6 +126,9 @@ html, body {
     height: auto;
     min-height: 85px;
     list-style-type: none;
+    opacity: 0;
+    transition: 0.25s ease-in-out;
+    transform: translateY(-300px);
 }
 
 .lists-list > li:nth-child(odd) {
@@ -359,6 +367,9 @@ html, body {
     padding: 10px 20px;
     height: 65px;
     border-top: 1px solid #ECF0F1;
+    transition: 0.25s ease-in-out;
+    transform: translateX(-300px);
+    opacity: 0;
 }
 
 .todo li {

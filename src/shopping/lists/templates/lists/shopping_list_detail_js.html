@@ -1,5 +1,17 @@
 <script>
     (function(){
+        
+        $(window).load(function(){
+            $('.list-item').each(function(i){
+                setTimeout(function(){
+                    $('.list-item').eq(i).css({
+                        'opacity': 1,
+                        'transform': 'translateX(0px)'
+                    });
+                }, i*100);
+            });
+        });
+        
         $('#list-sort').change(function(event) {
             var sort_by = $('#list-sort').val()
 

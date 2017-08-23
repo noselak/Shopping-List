@@ -1,0 +1,14 @@
+<script>
+    (function(){
+        $(window).load(function(){
+            $('.lists-list > li').each(function(i){
+                setTimeout(function(){
+                    $('.lists-list > li').eq(i).css({
+                        'opacity': 1,
+                        'transform': 'translateY(0px)'
+                    });
+                }, i*100);
+            });
+        });
+    })();
+</script>
