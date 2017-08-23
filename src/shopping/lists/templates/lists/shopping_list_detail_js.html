@@ -1,7 +1,7 @@
 <script>
     (function(){
         
-        $(window).load(function(){
+        var items_animation = function(){
             $('.list-item').each(function(i){
                 setTimeout(function(){
                     $('.list-item').eq(i).css({
@@ -10,6 +10,10 @@
                     });
                 }, i*100);
             });
+        }
+        
+        $(window).load(function(){
+            items_animation();
         });
         
         $('#list-sort').change(function(event) {
@@ -25,6 +29,7 @@
                 success: function(data) {
                     var result = $(data).find(".list-items");
                     $('.list-items').html(result);
+                    items_animation();
                 },
                 error: function(data) {
                     console.log('Ajax Error');
