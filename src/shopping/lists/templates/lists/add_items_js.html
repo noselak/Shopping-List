@@ -1,99 +1,128 @@
-{% load staticfiles %}
+{
+    % load staticfiles %
+}
 
 <script>
-    (function() {
-        
-        $('#search-items').keyup(function(event) {
-            var q = $(this).val()
-            
-            
-            var key = event.which;
-            if (key == 13) {
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}',
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                        'item-name': q,
-                    },
-                    success: function(data) {
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Ajax Error');
-                    }
-                });
-            }
-            
-            $('.search-result ul').empty()
 
-            if (q) {
-                var submit_button = $('<button>').attr('class', 'form-control-feedback fui-plus');
+(function() {
 
-                var csrf_token = $('<input>');
-                csrf_token.attr('type', 'hidden')
-                    .attr('name', 'csrfmiddlewaretoken')
-                    .attr('value', '{{ csrf_token }}');
+    var isMobile= {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        }
+        ,
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        }
+        ,
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        }
+        ,
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        }
+        ,
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        }
+        ,
+        any: function() {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+    }
+    ;
 
-                var item_name = $('<input>');
-                item_name.attr('type', 'hidden')
-                    .attr('name', 'item-name')
-                    .attr('value', q);
-
-                var result = $('<form>')
-                    .attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}')
-                    .attr('method', 'POST')
-                    .append(item_name)
-                    .append(csrf_token)
-                    .append(q)
-                    .append(submit_button);
-
-                $('.search-result ul').prepend($('<li>').append(result));
-            }
-
-            $.ajax({
-                type: 'GET',
-                url: '{% url "items:search_items_view" %}',
+    $('#search-items').keyup(function(event) {
+        var q=$(this).val(); 
+        var key=event.which;
+        if (key==13) {
+            $.ajax( {
+                type: 'POST',
+                url: '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}',
                 data: {
                     'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    'q': q,
-                    'shopping_list_pk': '{{ shopping_list.pk }}',
-                },
+                    'item-name': q,
+                }
+                ,
                 success: function(data) {
-                    $('.search-result ul').prepend(data);
-                },
+                    location.reload();
+                }
+                ,
                 error: function(data) {
                     console.log('Ajax Error');
                 }
-            });
-        });
+            }
+            );
+        }
 
-        $('.quantity-select')
-            .click(function(event){
-                $(this).val('');
-            })
-            .change(function(event) {
-                event.preventDefault();
-                var quantity = $(this).val();
-                var item_pk = $(this).attr('item-pk');
-        
-                console.log(item_pk);
-        
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "lists:edit_items_view" %}',
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                        'quantity': quantity,
-                        'pk': item_pk
-                    },
-                    success: function(data) {
-                        console.log('Ajax Success');
-                    },
-                    error: function(data) {
-                        console.log('Ajax Error');
-                    }
-                });
-            });
-    })();
+        $('.search-result ul').empty();
+        if (q) {
+            var submit_button=$('<button>').attr('class', 'form-control-feedback fui-plus');
+
+            var csrf_token=$('<input>');
+            csrf_token.attr('type', 'hidden') .attr('name', 'csrfmiddlewaretoken') .attr('value', '{{ csrf_token }}');
+
+            var item_name=$('<input>');
+            item_name.attr('type', 'hidden') .attr('name', 'item-name') .attr('value', q);
+
+            var result=$('<form>') .attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}') .attr('method', 'POST') .append(item_name) .append(csrf_token) .append(q) .append(submit_button);
+
+            $('.search-result ul').prepend($('<li>').append(result));
+        }
+
+        $.ajax( {
+            type: 'GET',
+            url: '{% url "items:search_items_view" %}',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'q': q,
+                'shopping_list_pk': '{{ shopping_list.pk }}',
+            }
+            ,
+            success: function(data) {
+                $('.search-result ul').prepend(data);
+            }
+            ,
+            error: function(data) {
+                console.log('Ajax Error');
+            }
+        }
+        );
+    }
+    );
+
+    $('.quantity-select').click(function(event) {
+        if(isMobile.any()) {
+           $(this).val(''); 
+        }
+    }
+    ).change(function(event) {
+        event.preventDefault();
+        var quantity=$(this).val();
+        var item_pk=$(this).attr('item-pk');
+
+        $.ajax( {
+            type: 'POST',
+            url: '{% url "lists:edit_items_view" %}',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'quantity': quantity,
+                'pk': item_pk
+            }
+            ,
+            success: function(data) {
+                console.log('Ajax Success');
+            }
+            ,
+            error: function(data) {
+                console.log('Ajax Error');
+            }
+        }
+        );
+    }
+    );
+}
+
+)();
 </script>
