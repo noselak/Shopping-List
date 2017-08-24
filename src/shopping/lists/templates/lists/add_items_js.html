@@ -26,13 +26,12 @@
         any: function() {
             return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
         }
-    }
-    ;
+    };
 
     $('#search-items').keyup(function(event) {
-        var q=$(this).val(); 
-        var key=event.which;
-        if (key==13) {
+        var q = $(this).val(); 
+        var key = event.which;
+        if (key == 13) {
             $.ajax( {
                 type: 'POST',
                 url: '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}',
@@ -51,20 +50,21 @@
             }
             );
         }
-
-        $('.search-result ul').empty();
+        
+        $('.search-add').empty();
+        
         if (q) {
-            var submit_button=$('<button>').attr('class', 'form-control-feedback fui-plus');
+            var submit_button = $('<button>').attr('class', 'form-control-feedback fui-plus');
 
-            var csrf_token=$('<input>');
-            csrf_token.attr('type', 'hidden') .attr('name', 'csrfmiddlewaretoken') .attr('value', '{{ csrf_token }}');
+            var csrf_token = $('<input>');
+            csrf_token.attr('type', 'hidden') .attr('name', 'csrfmiddlewaretoken').attr('value', '{{ csrf_token }}');
 
-            var item_name=$('<input>');
-            item_name.attr('type', 'hidden') .attr('name', 'item-name') .attr('value', q);
+            var item_name = $('<input>');
+            item_name.attr('type', 'hidden') .attr('name', 'item-name').attr('value', q);
 
-            var result=$('<form>') .attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}') .attr('method', 'POST') .append(item_name) .append(csrf_token) .append(q) .append(submit_button);
+            var result = $('<form>').attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}').attr('method', 'POST').append(item_name).append(csrf_token).append(q).append(submit_button);
 
-            $('.search-result ul').prepend($('<li>').append(result));
+            $('.search-add').append($('<li>').append(result));
         }
 
         $.ajax( {
@@ -74,17 +74,17 @@
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
                 'q': q,
                 'shopping_list_pk': '{{ shopping_list.pk }}',
-            }
-            ,
+            },
             success: function(data) {
-                $('.search-result ul').prepend(data);
-            }
-            ,
+                var new_list = $('<ul>').html(data);
+                $('.search-result ul').eq(1).replaceWith(new_list);
+            },
             error: function(data) {
                 console.log('Ajax Error');
             }
-        }
-        );
+        });
+        
+        
     });
 
     $('.quantity-select').click(function(event) {
