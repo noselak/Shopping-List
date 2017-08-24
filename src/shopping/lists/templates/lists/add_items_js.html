@@ -57,10 +57,10 @@
             var submit_button = $('<button>').attr('class', 'form-control-feedback fui-plus');
 
             var csrf_token = $('<input>');
-            csrf_token.attr('type', 'hidden') .attr('name', 'csrfmiddlewaretoken').attr('value', '{{ csrf_token }}');
+            csrf_token.attr('type', 'hidden').attr('name', 'csrfmiddlewaretoken').attr('value', '{{ csrf_token }}');
 
             var item_name = $('<input>');
-            item_name.attr('type', 'hidden') .attr('name', 'item-name').attr('value', q);
+            item_name.attr('type', 'hidden').attr('name', 'item-name').attr('value', q);
 
             var result = $('<form>').attr('action', '{% url "lists:add_items_to_list_view" pk=shopping_list.pk %}').attr('method', 'POST').append(item_name).append(csrf_token).append(q).append(submit_button);
 
