@@ -12,7 +12,7 @@ from items.models import Item
 
 from .models import ShoppingList, ShoppingItem
 from .forms import ListCreateForm
-from .decorators import user_is_list_owner
+from .decorators import user_is_list_owner, user_is_list_owner_via_item
 
 
 class ShoppingListsView(LoginRequiredMixin, ListView):
@@ -103,16 +103,16 @@ class ArchiveShoppingListView(View):
 
 class MarkShoppingItemView(View):
     @method_decorator(login_required(login_url='users:login_view'))
+    @user_is_list_owner_via_item
     def post(self, request):
         item_pk = int(request.POST.get('pk'))
         shopping_item = ShoppingItem.objects.get(pk=item_pk)
 
-        if shopping_item.shopping_list.user == request.user:
-            if shopping_item.bought is False:
-                shopping_item.bought = True
-            else:
-                shopping_item.bought = False
-            shopping_item.save()
+        if shopping_item.bought is False:
+            shopping_item.bought = True
+        else:
+            shopping_item.bought = False
+        shopping_item.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -211,28 +211,25 @@ class AddItemsToListView(View):
 
 class DeleteItemsFromListView(View):
     @method_decorator(login_required(login_url='users:login_view'))
+    @user_is_list_owner_via_item
     def post(self, request, pk):
         shopping_item = get_object_or_404(ShoppingItem, pk=pk)
         shopping_list = shopping_item.shopping_list
-
-        if shopping_list.user == request.user:
-            shopping_item.delete()
-
+        shopping_item.delete()
         return redirect('lists:add_items_to_list_view',
                         pk=shopping_list.pk)
 
 
 class EditItemsView(View):
     @method_decorator(login_required(login_url='users:login_view'))
+    @user_is_list_owner_via_item
     def post(self, request):
         quantity = int(request.POST.get('quantity'))
         pk = int(request.POST.get('pk'))
         shopping_item = get_object_or_404(ShoppingItem, pk=pk)
         shopping_list = shopping_item.shopping_list
-
-        if shopping_list.user == request.user:
-            shopping_item.quantity = quantity
-            shopping_item.save()
+        shopping_item.quantity = quantity
+        shopping_item.save()
 
         return redirect('lists:add_items_to_list_view',
                         pk=shopping_list.pk)
