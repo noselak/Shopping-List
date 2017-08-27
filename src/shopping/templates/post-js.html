@@ -15,6 +15,10 @@
                     'csrfmiddlewaretoken': '{{ csrf_token }}',
                     'pk': item_pk
                 },
+                success: function(data){
+                    console.log('Ajax Success');
+                    $(this).toggleClass('todo-done');
+                },
                 error: function(data) {
                     console.log('Ajax Error');
                 }
